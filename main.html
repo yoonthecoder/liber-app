@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta
+      name="viewport"
+      content="initial-scale=1, width=device-width, viewport-fit=cover"
+    />
+    <link rel="stylesheet" href="lib/css/onsenui.css">
+    <link rel="stylesheet" href="lib/css/onsen-css-components.css">
+    <script src="lib/js/onsenui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+  <ons-navigator id="navigator" page="search-temp">
+    <ons-page>
+      <ons-tabbar swipeable position="bottom">
+        <ons-tab page="search-temp" label="Search" icon="md-search" active>
+        </ons-tab>
+        <ons-tab page="save-temp" label="Bookshelf" icon="md-book">
+        </ons-tab>
+      </ons-tabbar>
+    </ons-page> 
+
+    <!---------------------- Signup Page ----------------------->
+    <template id="singup-temp">
+      <ons-page id="signup-page" >
+        <div class="signup-page-container">
+          
+        </div>
+      </ons-page>
+    </template>
+    
+    <!---------------------- Search Page ----------------------->
+    <template id="search-temp">
+      <ons-page id="search-page">
+        <div class="search-page-container">
+          <ons-toolbar class="navbar">
+            <div class="center nav-logo"><img src="img/logo-hor.png" alt="logo"></div>
+            <div class="right">
+              <ons-button class="logout-btn btn-sm">Logout</ons-button>
+            </div>
+          </ons-toolbar>   
+            <div class="search-area">
+              <h2 class="search-heading center">Welcome, <span class="user-name">Yoon</span></h2>   
+              <div class="search-box">
+                <ons-search-input placeholder="Search for books" onchange="getBooks(this.value)"></ons-search-input>      
+                <ons-button class="search-btn" onclick="getBooks(this.value)"><ons-icon
+                  icon="md-search">
+                </ons-icon></ons-button>
+              </div>         
+            </div>     
+            
+            <ons-list class="search-result">
+              <!-- <ons-list-item>
+                <div class="left">
+                  <img class="book-thumbnail" src="img/book.jpg" alt="book-placeholder">
+                </div>
+                <div class="center book-info">
+                  <span class="book-title">Cutest kitty</span>
+                  <span class="book-author">Yoon Kim</span>
+                  <span class="book-date">2018-11-11</span>
+                </div>
+                <div class="right">
+                  <ons-button icon="md-caret-right"></ons-button>
+                </div>
+              </ons-list-item> -->
+            </ons-list>  
+        </div>
+      </ons-page>
+    </template>
+    <!---------------------- Book Detail Page ----------------------->
+    <template id="detail-temp">
+      <ons-page id="detail-page">
+        <ons-toolbar class="navbar">
+          <div class="left"><ons-back-button class="back-button back-btn">Back</ons-back-button></div> 
+          <div class="center" id="bookLabel">Book Title</div>        
+          <!-- <ons-icon id="saveBtn" icon="md-bookmark-outline"></ons-icon> -->
+        </ons-toolbar>         
+
+        <ons-card class="detail-container">
+          <div class="row1">
+            <div class="img-container">
+              <img id="bookImg" src="img/book.jpg">
+            </div>
+            <div class="datail-info">
+              <h1 class="book-detail-title" id="bookTitle" >Book Title</h1>
+              <div class="book-detail-author" id="bookAuthor">Yoon Kim</div>
+              <div class="book-detail-cat" id="bookCat">Computer</div>
+              <div class="book-detail-date" id="bookDate">2021-01-01</div>
+            </div>
+          </div>
+          <div class="row2">
+          <ons-button class="detail-btn saveBtn btn-lg" onclick="saveBook();myToast.toggle()">Save</ons-button>
+              <a id="infoLink"><ons-button class="detail-btn infoBtn btn-lg">Info</ons-button></a>
+              <a id="previewLink"><ons-button class="detail-btn previewBtn btn-lg">Preview</ons-button></a>
+          </div>
+          <div class="row3 detail-description">
+            <h3>Description</h3>
+            <p id="bookDescription"> 
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit expedita distinctio libero itaque, in, voluptate explicabo minima aliquid, magni at sint cumque facere. Non voluptate quisquam veniam nihil? Dolorem, velit. Dolorem dolore, optio reiciendis excepturi temporibus vitae ullam, debitis praesentium quis commodi quas corporis cumque harum quisquam soluta eos laboriosam?
+            </p>
+          </div>
+        </ons-card>
+        <ons-toast id="myToast" animation="ascend">
+          Book saved!
+          <button onclick="myToast.hide()">ok</button>
+        </ons-toast>
+      </ons-page>
+   </template>
+</ons-navigator>
+
+   <!---------------------- Bookshelf Page ----------------------->
+  <template id="save-temp">
+    <ons-page id="save-page">
+      <div class="save-page-container">
+        <ons-toolbar class="navbar">
+          <div class="center nav-logo"><img src="img/logo-hor.png" alt="logo"></div>
+          <div class="right">
+            <ons-button class="logout-btn btn-sm">Logout</ons-button>
+          </div>
+        </ons-toolbar>   
+        <div class="save-container">
+          <h2 class="center save-heading">Saved Books</h2>
+        </div>
+        <ons-list class="saved-result">
+          <!-- <ons-list-item>
+            <div class="left">
+              <img class="book-thumbnail" src="img/book.jpg" alt="book-placeholder">
+            </div>
+            <div class="center book-info">
+              <span class="book-title">Cutest kitty</span>
+              <span class="book-author">Yoon Kim</span>
+              <span class="book-date">2018-11-11</span>
+            </div>
+            <div class="right">
+              <ons-button icon="md-caret-right"></ons-button>
+            </div>
+          </ons-list-item> -->
+        </ons-list>  
+      </div>
+    </ons-page>
+  </template>  
+
+      <!---------------------- Spinner Modal ----------------------->
+      <ons-modal id="spinner-modal">
+        <div style="margin: auto;">
+            Loading..<br/>
+            <ons-icon icon="md-spinner" size="30px" spin></ons-icon>              
+        </div>
+      </ons-modal>
+    
+
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script>
+      // init block
+      document.addEventListener("init", function(event){
+        var page = event.target;
+
+        if(page.id !=='detail-page'){
+          page.querySelector('.logout-btn').onclick = function () {
+          window.location = "./index.html";
+        }}
+
+        if(page.id === 'detail-page'){
+          singleBook(page.data.book);
+        }     
+
+        if(page.id === 'save-page'){
+        }
+        
+      }
+    );
+
+
+      // Call API to get data that matched the search input
+      function getBooks(input) {
+        
+        var spinnerModal = document.querySelector('#spinner-modal');
+                spinnerModal.show();     
+               
+               $.ajax(`https://www.googleapis.com/books/v1/volumes?q=${input}`)
+               .done(function(result){
+                 createList(result.items);
+               })
+               .fail(function(xhr,status,error){
+                   console.log('error:'+xhr.status);
+               })
+               .always(function(){
+                   spinnerModal.hide();
+               })        
+      }
+      // Create a list of the books based on the data we got
+      function createList(data) {
+
+        var searchResult = document.querySelector('.search-result')
+        var spinnerModal = document.querySelector('#spinner-modal');
+
+        searchResult.querySelectorAll('ons-list-item').forEach(n => n.remove());
+
+        if (data === null) {
+                   spinnerModal.hide();
+                   searchResult.appendChild(ons.createElement(`<div>
+                      <p>Sorry, We couldn't find any results</p>
+                      </div>`)
+                      );
+        } else {
+          for(let i = 0; i < data.length; i++){
+                   searchResult.appendChild(
+                       ons.createElement(`<ons-list-item>
+                       <div class="book-list-item">
+                        <div class="book-list-left">
+                                <img class="book-thumbnail" src="${data[i].volumeInfo.imageLinks.thumbnail}">
+                                </div>
+                            <div class="book-list-center book-info">
+                                <span class="book-title">${data[i].volumeInfo.title}</span>
+                                <span class="book-author">${data[i].volumeInfo.authors}</span>
+                                <span class="book-date">${data[i].volumeInfo.publishedDate}</span>
+                            </div>
+                            <div class="book-list-right">` +
+                                '<ons-button class="book-right-btn" icon="md-caret-right" onclick="pushSinglePage(\''+ data[i].id + '\')"></ons-button>' +`
+                            </div>
+                          </div>
+                        </ons-list-item>
+                       `)
+                   )
+               }      
+        }
+      }
+
+      function singleBook(id) {
+
+        var spinnerModal = document.querySelector('#spinner-modal');
+                spinnerModal.show();    
+
+               $.ajax("https://www.googleapis.com/books/v1/volumes/" + id)
+               
+               .done(function(response){
+                   setBookInfo(response.volumeInfo);
+                  
+                  //  localStorage.setItem("id",response.id);
+                  //  localStorage.setItem("title",response.volumeInfo.title);
+                  
+               })
+               .fail(function(xhr,status,error){
+                   console.log('error:'+ xhr.status + xhr.readyState);
+               })
+               .always(function(){
+                   spinnerModal.hide();
+               })
+              
+      }
+
+      function setBookInfo(book){
+      
+        let detailPage = document.getElementById('detail-page');
+
+        detailPage.querySelector('#bookLabel').innerHTML = book.title;
+        detailPage.querySelector('#bookImg').src = book.imageLinks.thumbnail;
+        detailPage.querySelector('#bookTitle').innerHTML = book.title;
+        detailPage.querySelector('#bookAuthor').innerHTML = book.authors;
+        detailPage.querySelector('#bookCat').innerHTML = book.categories;
+        detailPage.querySelector('#bookDate').innerHTML = book.publishedDate;
+        detailPage.querySelector('#bookDescription').innerHTML = book.description;
+        detailPage.querySelector('#infoLink').setAttribute("href",book.infoLink)
+        detailPage.querySelector('#previewLink').setAttribute("href",book.previewLink)
+            
+  
+      }
+      
+
+      function pushSinglePage(id){
+        document.querySelector('#navigator').pushPage('detail-temp', {data: {book: id}});
+
+        //single book info API call
+        singleBook(id);
+
+        //save the id in the localStorage 
+        localStorage.setItem("id",id);
+
+      }
+
+      // Save books 
+     
+      let savedBooks = [];
+      let savedBooksInfo = [];
+
+      function saveBook() {
+        currId = localStorage.getItem("id");
+        // addSavedBooks(currId);
+        getSavedBooks(currId);
+        // createSavedBooks(savedBooksInfo);
+      }
+      
+      function addSavedBooks(id){
+        savedBooks.push(id);
+      }
+
+      function getSavedBooks(id) {
+       
+          $.ajax("https://www.googleapis.com/books/v1/volumes/" + id)
+               
+               .done(function(response){
+                 console.log(response);
+                 savedBooksInfo.push(response);
+                 createSavedBooks(response);
+               })
+               .fail(function(xhr,status,error){
+                   console.log('error:'+ xhr.status + xhr.readyState);
+               })
+               .always(function(){
+                  
+               })
+        
+      }
+
+      function createSavedBooks(book) {
+        var savedResult = document.querySelector('.saved-result')
+       
+
+            savedResult.appendChild(
+              ons.createElement(`<ons-list-item class="list-item-container">
+                       <div class="book-list-item">
+                        <div class="book-list-left">
+                                <img class="book-thumbnail" src="${book.volumeInfo.imageLinks.thumbnail}">
+                                </div>
+                            <div class="book-list-center book-info">
+                                <span class="book-title">${book.volumeInfo.title}</span>
+                                <span class="book-author">${book.volumeInfo.authors}</span>
+                                <span class="book-date">${book.volumeInfo.publishedDate}</span>
+                            </div>
+                          </div>
+                        </ons-list-item>
+                       `)
+                   )
+                   
+      }
+      // function createSavedBooks(book) {
+      //   var savedResult = document.querySelector('.saved-result')
+      //   var spinnerModal = document.querySelector('#spinner-modal');
+
+      //     for(let i = 0; i < book.length; i++){
+      //       savedResult.appendChild(
+      //         ons.createElement(`<ons-list-item>
+      //                  <div class="book-list-item">
+      //                   <div class="book-list-left">
+      //                           <img class="book-thumbnail" src="${book[i].volumeInfo.imageLinks.thumbnail}">
+      //                           </div>
+      //                       <div class="book-list-center book-info">
+      //                           <span class="book-title">${book[i].volumeInfo.title}</span>
+      //                           <span class="book-author">${book[i].volumeInfo.authors}</span>
+      //                           <span class="book-date">${book[i].volumeInfo.publishedDate}</span>
+      //                       </div>
+      //                     </div>
+      //                   </ons-list-item>
+      //                  `)
+      //              )
+      //          }      
+      // }
+  
+
+    </script>
+</body>
+</html>

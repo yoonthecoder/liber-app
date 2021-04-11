@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+        <link rel="stylesheet" href="lib/css/onsenui.css">
+        <link rel="stylesheet" href="lib/css/onsen-css-components.css">
+        
+        <link rel="stylesheet" href="css/index.css">
+        <title>Liber - Book Search App</title>
+    </head>
+    <body>
+        <ons-page id="login-page" class="login-page">
+          <div class="login-container">
+            <div class="main-logo">
+                <img src="img/logo-ver.png" alt="liber-logo">
+            </div>
+            <div class="center login-form">
+              <p>
+                <ons-input id="username" modifier="underbar" placeholder="Username" float></ons-input>
+              </p>
+              <p>
+                <ons-input id="password" modifier="underbar" type="password" placeholder="Password" float></ons-input>
+              </p>
+              <p style="margin-top: 30px;">
+                <ons-button class="btn-lg" id="login-btn" data-src="main.html" onclick="login()">Sign in</ons-button>
+                <ons-button class="btn-lg" id="login-btn" data-src="main.html" onclick="signup()">Sign up</ons-button>
+              </p>
+            </div>
+          </div>
+        </ons-page>
+
+        <script src="lib/js/onsenui.min.js"></script>
+        <script src="cordova.js"></script>
+        <script>
+          function login() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+      
+            // if either username or password is empty, display an alert window
+            if (username && password !== '') {
+              window.location = './main.html';  
+            } else {
+              ons.notification.alert("Type anything to sign in :) ")
+            }
+          }
+
+          function signup() {
+            window.location='./main.html'
+          }
+
+          
+        </script>
+    </body>
+</html>
